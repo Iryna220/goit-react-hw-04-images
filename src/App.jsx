@@ -27,9 +27,10 @@ const App = () => {
       try {
         setLoading(true);
         const data = await fetchPicturesQuery(search, page);
-        data.hits.length === 0
-          ? toast.error('Nothing found')
-          : setPictures(prevPictures => [...prevPictures, ...data.hits]);
+        if (data.hits.length === 0) {
+          toast.error('Nothing found');
+        }
+        setPictures(prevPictures => [...prevPictures, ...data.hits]);
         settotalHits(data.totalHits);
       } catch (error) {
         setError({ error: error.message });
